@@ -66,7 +66,7 @@ fi
 
 
 if [ x$rootfs_loc = xnet ]; then
-	bootargs="$bootargs root=/dev/nfs nfsroot=$nfsroot,v3,tcp noinitrd"
+	bootargs="$bootargs root=/dev/nfs nfsroot=$nfsroot,v3,tcp noinitrd init=/linuxrc"
 elif [ x$rootfs_loc = xdisk ]; then
 	bootargs="$bootargs root=/dev/$rootfs_part_linux_dev rootfstype=$rootfs_type noinitrd rootwait"
 elif [ x$rootfs_loc = xinitrd ]; then

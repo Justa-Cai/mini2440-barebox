@@ -1,0 +1,12 @@
+#!/bin/sh
+file=barebox.bin
+dest=/dev/nand0.barebox
+tftp mini2440/$file /$file
+if [ $? != 0 ] ; then
+  "tftp fail..."
+  exit 1
+fi 
+
+erase $dest
+cp /$file $dest
+reset

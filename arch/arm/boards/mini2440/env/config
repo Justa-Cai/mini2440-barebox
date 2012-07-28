@@ -1,21 +1,21 @@
 #!/bin/sh
 
 hostname=mini2440
-eth0.serverip=
+eth0.serverip=192.168.1.205
 user=
 
 # use 'dhcp' to do dhcp in barebox and in kernel
 # use 'none' if you want to skip kernel ip autoconfiguration
-ip=dhcp
+ip=empty
 
 # or set your networking parameters here
-#eth0.ipaddr=a.b.c.d
-#eth0.netmask=a.b.c.d
-#eth0.gateway=a.b.c.d
-#eth0.serverip=a.b.c.d
+eth0.ipaddr=192.168.1.121
+eth0.netmask=255.255.255.0
+eth0.gateway=192.168.1.1
+eth0.serverip=192.168.1.205
 
 # can be either 'nfs', 'tftp' or 'nand'
-kernel_loc=tftp
+kernel_loc=nand
 # can be either 'net', 'nand' or 'initrd'
 rootfs_loc=net
 
@@ -33,10 +33,10 @@ if [ -n $user ]; then
 	nfsroot="${eth0.serverip}:/home/${user}/nfsroot/${hostname}"
 	rootfsimage="${user}"-"${rootfsimage}"
 else
-	nfsroot="${eth0.serverip}:/path/to/nfs/root"
+	nfsroot="${eth0.serverip}:/tftproot/mini2440/rootfs"
 fi
 
-autoboot_timeout=3
+autoboot_timeout=1
 
 #
 # "mini2440" kernel parameter
@@ -51,5 +51,5 @@ bootargs="console=ttySAC0,115200 mini2440=0tbc"
 # TODO NOR support
 
 nand_device="nand"
-nand_parts="256k(barebox),128k(bareboxenv),1536k(kernel),-(root)"
+nand_parts="256k(barebox),128k(bareboxenv),5120k(kernel),-(root)"
 rootfs_mtdblock_nand=3
